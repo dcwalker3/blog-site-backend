@@ -1,25 +1,19 @@
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
-    author:{
+const tokenSchema = new mongoose.Schema({
+    accsessToken: {
         type: String,
         required: true
     },
-    title: {
+    refreshToken: {
         type: String,
         required: true
     },
-    body: {
+    userId: {
         type: String,
         required: true
-    },
-    date: {
-        type: Date,
-        default: Date.now()
     },
 }, {timestamps: true});
 
-
-const Post = mongoose.model('Post', postSchema);
-
-module.exports = Post;
+const Token = mongoose.model('Token', tokenSchema);
+module.exports = Token;

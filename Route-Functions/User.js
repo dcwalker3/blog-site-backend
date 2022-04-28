@@ -1,18 +1,22 @@
 const User = require('../Models/user.model');
 
-function addUser(user){
+function addUser(email, password, Callback){
 
     const newUser = new User({
-        email: user.email,
+        email: email,
     });
-    newUser.setPassword(user.password);
+    newUser.setPassword(password);
 
     newUser.save((err, user) => {
         if(err){
-            console.log(err);
-            return Promise.reject(err);
+            if(err.code === 11000){
+                Callback("User already exists");
+            } else {
+                console.log(err);
+                Callback("Unable to add user");
+            }
         }
-        return Promise.resolve(user);
+        Callback(true);
         });
 }
 
@@ -60,6 +64,11 @@ function deleteUser(id){
             return Promise.resolve(user);
         }
     });
+}
+
+
+function signOut(email, Callback){
+    
 }
 
 

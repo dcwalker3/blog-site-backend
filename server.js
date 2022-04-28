@@ -15,9 +15,11 @@ require('./DB/conn');
 
 const post = require('./Routes/post.js');
 const user = require('./Routes/user.js');
+const auth = require('./Routes/auth.js');
 
 app.use('/post', post);
 app.use('/user', user);
+app.use('/auth', auth);
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
