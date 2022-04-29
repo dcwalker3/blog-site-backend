@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const tokenSchema = new mongoose.Schema({
-    accsessToken: {
+    accessToken: {
         type: String,
         required: true
     },
