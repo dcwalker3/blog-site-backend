@@ -88,29 +88,32 @@ function authenticateToken(token, Callback){
 }
 
 function generateToken(user, Callback){
-    if(user && user._id){
+    if(user){
         const refreshToken = jwt.sign({id: user._id, email: user.email, role: user.role}, secret);
         const accessToken = jwt.sign({id: user._id, email: user.email, role: user.role}, secret, {expiresIn: '1h'});
 
         const token = new Token({
-            user: user._id,
+            userId: user._id,
             refreshToken: refreshToken,
             accessToken: accessToken
         });
-        token.save((err, token) => {
-            if(err){
-                console.log(err);
+        
+        token.save(token => {
+            if(token){
+                return Callback({
+                    refreshToken: refreshToken,
+                    accessToken: accessToken,
+                    expiresIn: 3600
+                });
+            } else {
+
                 return Callback(false);
             }
-            return Callback({
-                refreshToken: refreshToken,
-                accessToken: accessToken,
-                expiresIn: 3600
-            });
         });
     } else {
         return Callback(false);
     }
+    
 
 }
 
